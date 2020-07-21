@@ -2,19 +2,36 @@ body {
     background-color: white;
 }
 
-.navbar {
-    background-color: #2a2a2c;
+
+.searchBtn {
+    background-color: #0077ff;
     color: white;
-    font-size: 40px;
-    font-weight: bold;
-    padding: 15px
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
-h1{
-    text-align: center;
+input {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
-form {
-    float: left;
-    padding: 15px;
+.saveBtn i:hover {
+    font-size: 20px;
+    transition: all .3s ease-in-out;
+}
 
+
+/* If I want to hide before searched */
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
 }
