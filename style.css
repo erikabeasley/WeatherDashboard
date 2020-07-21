@@ -1,0 +1,20 @@
+body {
+    background-color: white;
+}
+
+.navbar {
+    background-color: #2a2a2c;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    padding: 15px
+}
+h1{
+    text-align: center;
+}
+
+form {
+    float: left;
+    padding: 15px;
+
+}

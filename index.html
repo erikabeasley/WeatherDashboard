@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!--Bootstrap Link-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <!--FontAwesome Link-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="style.css" />
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <header class="bg-dark">
+        <h1 class="display-3">Weather Dashboard</h1>
+    </header>
+
+    <form>
+        <div class="form-city">
+          <label for="searchCity">Search for a City:</label>
+          <input type="text" class="form-control" id="searchCityInput" placeholder="City Name"><span>
+          <button type="button" class="searchBtn"><i class="far fa-search" style="font-size:24px"></i></button></span>
+        </div>
+    </form>
+
+    <section>
+        <div class="city-diplay">
+
+        </div>
+    </section>
+   
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
