@@ -111,7 +111,7 @@ function get5DayForecast(response) {
 
 } 
 
-//Function for Kelvin To Farenheit
+//Function for Kelvin To Fahrenheit
 function k2f(K) {
     return Math.floor((K - 273.15) * 1.8 + 32);
 }
