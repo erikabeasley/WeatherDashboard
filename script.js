@@ -110,3 +110,10 @@ function get5DayForecast(response) {
         })
 
 } 
+
+//Function for Kelvin To Farenheit
+function k2f(K) {
+    return Math.floor((K - 273.15) * 1.8 + 32);
+}
+
+//Function for rendering Search History
