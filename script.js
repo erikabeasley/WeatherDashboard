@@ -1,34 +1,34 @@
-//API key
-var apiKey = "";
+//variables
+const inputEl = document.getElementById("searchInput");
+const searchEl = document.getElementById("searchBtn");
 
-//Store Input Value
+// const clearEl = document.getElementById("clear-history");
+const nameEl = document.getElementById("currentCity-display");
+const currentPicEl = document.getElementById("currentCity-img");
 
+const currentTempEl = document.getElementById("temperature");
+const currentHumidityEl = document.getElementById("humidity");4
+const currentWindEl = document.getElementById("wind-speed");
+const currentUVEl = document.getElementById("UV-index");
 
-//Get value of the input from user (city)
+// const historyEl = document.getElementById("history");
+let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+console.log(searchHistory);
 
+//API Key
+var apiKey = "&appid=afaa8eea1769b4359fd8e07b2efcefbd";
 
-//Clear Input box
+//Function to get current Weather conditions
+function getWeatherConditions(response) {
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey;
 
-
-//Call the api with query url
-
-
-//Ajax for temp, humidity, and wind speed
-
-//Function to get temp and convert to Fahrenheit
-
-
-//Get and Set to Local Storage: Card for weather display, City, City Date, Temp, Humidity, Wind, and Weather Icon
-
-
-//Append content to page
-
-
-
-
-
-//Forecast function Below
-
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
+    .then(function (response) {
 
 
+    })
 
+}

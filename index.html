@@ -29,8 +29,10 @@
                 <!--Form for Seaching City-->
                 <h3>Search for a City:</h3>
                 <form class="input-group mb-3">
-                    <input type="text" id="searchInput" class="form-control" class="input-group-append" placeholder="City Name">
-                    <button type="button" class="searchBtn" class="btn btn-primary"id="button-addon2"><i class="far fa-search"></i></button>
+                    <input type="text" id="searchInput" class="form-control" class="input-group-append"
+                        placeholder="City Name">
+                    <button type="button" id="searchBtn" class="btn btn-primary" id="button-addon2"><i
+                            class="far fa-search"></i></button>
                 </form>
 
                 <!--Card that diplays list of previously searched itesms-->
@@ -42,24 +44,36 @@
 
             <!--Coloumn 2 for Current City Display-->
             <section class="col-lg-9">
-
-                <div class="currentCity-display mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <span id="currentCity-display mt-4 align-middle"></span>
+                        <img id="currentCity-img" src="placeholder" alt="">
+                    </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-12">
+                        <p id="temperature"></p>
+                        <p id="humidity"></p>
+                        <p id="wind-speed"></p>
+                        <p id="UV-index"></p>
+                    </div>
+                </div>
+                <!--row for 5-day forecast-->
+                <div class="row">
+                    <div class="col-12">
+                        <h2 id="forecastTitle" class="mt-3">5-Day Forecast:</h2>
+                        <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
+                        <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
+                        <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
+                        <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
+                        <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
+                    </div>
+                </div>
             </section>
 
         </div>
-
-        <!--Forecast Container-->
-        <div class="col-md-12 mt-4">
-
-            <h2 id="forecastTitle" class="mt-3">5-Day Forecast:</h2>
-            <div id="forecast" class="row"></div>
-        </div>
-
     </div>
 
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
