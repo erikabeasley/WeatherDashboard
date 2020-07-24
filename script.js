@@ -49,14 +49,14 @@ $(document).ready(function () {
                 var day = currentDate.getDate();
                 var month = currentDate.getMonth() + 1;
                 var year = currentDate.getFullYear();
-    
+
                 //Display (Month/Day/Year)
                 nameEl.html(response.name + " (" + month + "/" + day + "/" + year + ") ");
 
                 //Display weather icon
                 let weatherImg = response.weather[0].icon;
                 $("currentImgEl").attr("src", "https://openweathermap.org/img/wn/" + weatherImg + "@2x.png");
-                
+
                 $("currentImgEl").attr("alt", response.weather[0].description);
                 console.log("Message3")
 
@@ -77,22 +77,19 @@ $(document).ready(function () {
             method: "GET"
         }).then(function (response) {
             console.log(response);
-            let UVindex = document.createElement("span");
-            UVindex.setAttribute("class", "badge badge-danger");
-            UVindex.setAttribute("type", "text");
-            UVindex.setAttribute("value", response[0].value);
-            // UVindex.html(response[0].value);
+            if (response[0].value <=4)
+                var UVindex = $("<span>").attr("class", "badge badge-success").attr("type", "text").text(response[0].value)
             
-            console.log(UVindex);
-            var strUVIndex = JSON.stringify(UVindex); 
-            console.log(strUVIndex);
-            currentUVEl.html("UV Index: " + strUVIndex);            
-            
-            // currentUVEl.append(UVindex);
+            else if (response[0].value >=5 && response[0].value <=8)
+                var UVindex = $("<span>").attr("class", "badge badge-warning").attr("type", "text").text(response[0].value)
+            else
+                var UVindex = $("<span>").attr("class", "badge badge-danger").attr("type", "text").text(response[0].value)
 
-            console.log(city);
+            console.log(UVindex);
+            currentUVEl.html("UV Index: ")
+            currentUVEl.append(UVindex);
             get5DayForecast(city);
-            
+
         });
     }
 
