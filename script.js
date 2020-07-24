@@ -2,7 +2,6 @@
 $(document).ready(function () {
 
     var inputEl = document.getElementById("searchInput");
-
     var searchEl = $("#searchBtn");
 
     //On click event for Search Button
@@ -17,18 +16,18 @@ $(document).ready(function () {
         renderSearchHistory();
     })
 
-    var nameEl = document.getElementById("currentCity-display");
-    var currentImgEl = document.getElementById("currentCity-img");
+    var nameEl = $("#currentCity");
+    var currentImgEl = $("#currentCity-img");
 
-    var currentTempEl = document.getElementById("temperature");
-    var currentHumidityEl = document.getElementById("humidity"); 4
-    var currentWindEl = document.getElementById("wind-speed");
-    var currentUVEl = document.getElementById("UV-index");
+    var currentTempEl = $("#temperature");
+    var currentHumidityEl = $("#humidity");
+    var currentWindEl = $("#wind-speed");
+    var currentUVEl = $("#UV-index");
 
-    var historyEl = document.getElementById("history");
+    var historyEl = $("#history");
     let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
     console.log(searchHistory);
-    var city = document.getElementById("searchInput").value;
+    var city = $("#searchInput").value;
 
     console.log(city)
 
@@ -52,24 +51,53 @@ $(document).ready(function () {
                 var year = currentDate.getFullYear();
                 console.log(year)
                 //Display (Month/Day/Year)
-                nameEl.innerHTML = response.name + " (" + month + "/" + day + "/" + year + ") ";
+                $("nameEl").html(response.name + " (" + month + "/" + day + "/" + year + ") ");
+
+                console.log(nameEl.innerText);
                 //Display weather icon
                 let weatherImg = response.weather[0].icon;
-                currentImgEl.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherImg + "@2x.png");
-                currentImgEl.setAttribute("alt", response.weather[0].description);
+                console.log("Message1")
+                $("currentImgEl").attr("src", "https://openweathermap.org/img/wn/" + weatherImg + "@2x.png");
+                console.log("Message2")
+                $("currentImgEl").attr("alt", response.weather[0].description);
+                console.log("Message3")
                 //Display Temp, Humidity, Wind Speed
-                currentTempEl.innerHTML = "Temperature: " + k2f(response.main.temp) + "F";
+                currentTempEl.innerHTML = "Temperature: " + k2f(response.main.temp) + " F";
+                console.log(response.main.temp);
+                console.log(currentTempEl.innerHTML);
                 currentHumidityEl.innerHTML = "Humidity: " + response.main.humidity + "%";
+                console.log(currentHumidityEl.innerHTML);
                 currentWindEl.innerHTML = "Wind Speed: " + response.wind.speed + " MPH";
-                
+                console.log(currentWindEl.innerHTML);
+
                 getUVIndex(response.coord.lat, response.coord.lon);
             });
     }
 
-     //Function to Display for 5-Day Forecast
-    function get5DayForecast () {
-        var cityID = response.id;
-        console.log("cityID" + cityID);
+    function getUVIndex(lat, lon) {
+        //Display UV Index  
+        console.log(lat, lon);
+        let UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=3f61d52554cfb25b0d5c75844b1a2a65" + "&cnt=1";
+        $.ajax({
+            url: UVQueryURL,
+            method: "GET"
+        }).then(function (response) {
+            let UVindex = document.createElement("span");
+            $("UVindex").attr("class", "badge badge-danger");
+            UVindex.innerHTML = response[0].value;
+            currentUVEl.innerHTML = "UV Index: " + response[0].value;
+            // currentUVEl.append(UVindex);
+            console.log(response.id);
+            get5DayForecast(response.id);
+            
+        });
+    }
+
+    //Function to Display for 5-Day Forecast
+    function get5DayForecast(cityID) {
+        // var cityID = response.id;
+        console.log("Mess3");
+        console.log(cityID);
         var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityID + "&appid=3f61d52554cfb25b0d5c75844b1a2a65";
 
         $.ajax({
@@ -98,8 +126,10 @@ $(document).ready(function () {
 
                     //Displays Weather Icon under Date (on each forecast)
                     var forecastWeatherEl = document.createElement("img");
-                    forecastWeatherEl.setAttribute("src", "https://openweathermap.org/img/wn/" + response.list[forecastIndex].weather[0].icon + "@2x.png");
+                    $("forecastWeatherEl").attr("src", "https://openweathermap.org/img/wn/" + response.list[forecastIndex].weather[0].icon + "@2x.png");
+                    console.log("mess")
                     forecastWeatherEl.setAttribute("alt", response.list[forecastIndex].weather[0].description);
+                    console.log("mess2")
                     forecastEls[i].append(forecastWeatherEl);
 
                     //Displays Temperature under Weather Icon (on each forecast)
@@ -114,23 +144,6 @@ $(document).ready(function () {
                 }
 
             })
-    }
-
-    function getUVIndex(lat,lon) {
-        //Display UV Index  
-        console.log(lat, lon);
-        let UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&cnt=1";
-        $.ajax({
-            url: UVQueryURL,
-            method: "GET"
-        }).then(function (response) {
-            let UVindex = document.createElement("span");
-            UVindex.setAttribute("class", "badge badge-danger");
-            UVindex.innerHTML = response[0].value;
-            currentUVEl.innerHTML = "UV Index: ";
-            currentUVEl.append(UVindex);
-            get5DayForecast();
-        });
     }
 
     //Function for Kelvin To Fahrenheit
