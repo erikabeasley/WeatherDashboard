@@ -11,9 +11,9 @@ $(document).ready(function () {
         var searchTerm = inputEl.value;
         console.log("searchTerm" + searchTerm);
         getWeatherConditions(city);
-        searchHistory.push(searchTerm);
-        localStorage.setItem("search", JSON.stringify(searchHistory));
-        renderSearchHistory();
+        // searchHistory.push(searchTerm);
+        // localStorage.setItem("search", JSON.stringify(searchHistory));
+        // renderSearchHistory();
     })
 
     var nameEl = $("#currentCity");
@@ -62,7 +62,7 @@ $(document).ready(function () {
                 $("currentImgEl").attr("alt", response.weather[0].description);
                 console.log("Message3")
                 //Display Temp, Humidity, Wind Speed
-                currentTempEl.innerHTML = "Temperature: " + k2f(response.main.temp) + " F";
+                $("currentTempEl").html("Temperature: " + k2f(response.main.temp) + " F");
                 console.log(response.main.temp);
                 console.log(currentTempEl.innerHTML);
                 currentHumidityEl.innerHTML = "Humidity: " + response.main.humidity + "%";
@@ -70,11 +70,11 @@ $(document).ready(function () {
                 currentWindEl.innerHTML = "Wind Speed: " + response.wind.speed + " MPH";
                 console.log(currentWindEl.innerHTML);
 
-                getUVIndex(response.coord.lat, response.coord.lon);
+                getUVIndex(response.coord.lat, response.coord.lon, city);
             });
     }
 
-    function getUVIndex(lat, lon) {
+    function getUVIndex(lat, lon, city) {
         //Display UV Index  
         console.log(lat, lon);
         let UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=3f61d52554cfb25b0d5c75844b1a2a65" + "&cnt=1";
@@ -82,23 +82,22 @@ $(document).ready(function () {
             url: UVQueryURL,
             method: "GET"
         }).then(function (response) {
+            console.log(response);
             let UVindex = document.createElement("span");
             $("UVindex").attr("class", "badge badge-danger");
             UVindex.innerHTML = response[0].value;
             currentUVEl.innerHTML = "UV Index: " + response[0].value;
             // currentUVEl.append(UVindex);
-            console.log(response.id);
-            get5DayForecast(response.id);
+            console.log(city);
+            get5DayForecast(city);
             
         });
     }
 
     //Function to Display for 5-Day Forecast
-    function get5DayForecast(cityID) {
-        // var cityID = response.id;
-        console.log("Mess3");
-        console.log(cityID);
-        var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityID + "&appid=3f61d52554cfb25b0d5c75844b1a2a65";
+    function get5DayForecast(city) {
+        console.log(city);
+        var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + city + "&appid=3f61d52554cfb25b0d5c75844b1a2a65";
 
         $.ajax({
             url: forecastQueryURL,
@@ -161,7 +160,7 @@ $(document).ready(function () {
             history.setAttribute("type", "text")
             // history.setAttribute("readonly","true");
             history.setAttribute("class", "form-control d-block bg-white");
-            history.setAttribute("value", "searchHistory[i]");
+            history.setAttribute("value", searchHistory[i]);
             //add event listener 
             history.addEventListener("click", function () {
                 getWeatherConditions(history.value);
