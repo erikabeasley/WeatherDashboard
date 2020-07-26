@@ -9,7 +9,6 @@ $(document).ready(function () {
         var city = $("#searchInput").val();
         event.preventDefault();
         var searchTerm = inputEl.value;
-        console.log("searchTerm" + searchTerm);
         getWeatherConditions(city);
         searchHistory.push(searchTerm);
         localStorage.setItem("search", JSON.stringify(searchHistory));
@@ -17,7 +16,7 @@ $(document).ready(function () {
     })
 
     var nameEl = $("#currentCity");
-    var currentImgEl = $("#currentCity-img");
+    // var currentImgEl = $("#currentCity-img");
 
     var currentTempEl = $("#temperature");
     var currentHumidityEl = $("#humidity");
@@ -26,40 +25,35 @@ $(document).ready(function () {
 
     var historyEl = $("#history");
     let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
-    console.log(searchHistory);
     var city = $("#searchInput").value;
 
-    console.log(city)
 
     //Function to get current Weather conditions
     function getWeatherConditions(city) {
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=3f61d52554cfb25b0d5c75844b1a2a65";
-        console.log(queryURL);
-        console.log(city)
 
         $.ajax({
             url: queryURL,
             method: "GET"
         })
             .then(function (response) {
-                console.log(response);
 
                 var currentDate = new Date(response.dt * 1000);
-                console.log(currentDate);
                 var day = currentDate.getDate();
                 var month = currentDate.getMonth() + 1;
                 var year = currentDate.getFullYear();
 
-                //Display (Month/Day/Year)
-                nameEl.html(response.name + " (" + month + "/" + day + "/" + year + ") ");
-
+                //Display City Name and (Month/Day/Year)
+                var dateEl = response.name + " (" + month + "/" + day + "/" + year + ") ";
+                nameEl.html(dateEl);
+                                
                 //Display weather icon
-                let weatherImg = response.weather[0].icon;
-                $("currentImgEl").attr("src", "https://openweathermap.org/img/wn/" + weatherImg + "@2x.png");
-
-                $("currentImgEl").attr("alt", response.weather[0].description);
-                console.log("Message3")
-
+                var weatherImg = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
+                
+                // currentImgEl.src(weatherImg);
+                $("#currentCity-img").attr("src", weatherImg);
+                $("#currentCity-img").attr("alt", response.weather[0].description);
+        
                 //Display Temp, Humidity, Wind Speed
                 currentTempEl.html("Temperature: " + k2f(response.main.temp) + " F");
                 currentHumidityEl.html("Humidity: " + response.main.humidity + "%");
@@ -70,13 +64,11 @@ $(document).ready(function () {
 
     function getUVIndex(lat, lon, city) {
         //Display UV Index  
-        console.log(lat, lon, city);
         let UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=3f61d52554cfb25b0d5c75844b1a2a65" + "&cnt=1";
         $.ajax({
             url: UVQueryURL,
             method: "GET"
         }).then(function (response) {
-            console.log(response);
             if (response[0].value <=4)
                 var UVindex = $("<span>").attr("class", "badge badge-success").attr("type", "text").text(response[0].value)
             
@@ -85,7 +77,6 @@ $(document).ready(function () {
             else
                 var UVindex = $("<span>").attr("class", "badge badge-danger").attr("type", "text").text(response[0].value)
 
-            console.log(UVindex);
             currentUVEl.html("UV Index: ")
             currentUVEl.append(UVindex);
             get5DayForecast(city);
@@ -95,31 +86,37 @@ $(document).ready(function () {
 
     //Function to Display for 5-Day Forecast
     function get5DayForecast(city) {
-        console.log(city);
-        var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + city + "&appid=3f61d52554cfb25b0d5c75844b1a2a65";
+
+        var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=3f61d52554cfb25b0d5c75844b1a2a65";
 
         $.ajax({
             url: forecastQueryURL,
             method: "GET"
         })
             .then(function (response) {
-                console.log(response);
 
-                var forecastEls = document.querySelectorAll(".forecast");
+                var forecastEls = $(".forecast");
+                
                 //ForLoop- Displays Forecast for each Day in 5Day Forecast
                 for (i = 0; i < forecastEls.length; i++) {
                     forecastEls[i].innerHTML = "";
                     var forecastIndex = i * 8 + 4;
                     var forecastDate = new Date(response.list[forecastIndex].dt * 1000);
+                    console.log(forecastDate);
+
                     //Get Day, Month, Year
                     var forecastDay = forecastDate.getDate();
                     var forecastMonth = forecastDate.getMonth() + 1;
                     var forecastYear = forecastDate.getFullYear();
 
                     //Displays (Month/Day/Year) on each forecast
-                    var forecastDateEl = document.createElement("p");
-                    forecastDateEl.setAttribute("class", "mt-3 mb-0 forecast-date");
-                    forecastDateEl.html(forecastMonth + "/" + forecastDay + "/" + forecastYear);
+                    // var forecastDateEl = document.createElement("p");
+                    var forecastDateY = forecastMonth + "/" + forecastDay + "/" + forecastYear;
+                    // forecastDateEl.setAttribute("class", "mt-3 mb-0 forecast-date");
+                    $("forecastDateEl").attr("class", "mt-3 mb-0 forecast-date");             
+                    forecastDateEl.html(forecastDateY);
+                    console.log(forecastDateY); 
+                    console.log(forecastDateEl); 
                     forecastEls[i].append(forecastDateEl);
 
                     //Displays Weather Icon under Date (on each forecast)
