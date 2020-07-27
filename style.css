@@ -37,6 +37,9 @@ input {
 .forecast {
     text-align: center;
     display: block;
+    background-color: #0077ff;
+    width: 130px;
+    border-radius: 0px;
 }
 
 
