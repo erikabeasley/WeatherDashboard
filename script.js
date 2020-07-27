@@ -96,7 +96,7 @@ $(document).ready(function () {
             .then(function (response) {
 
                 var forecastEl = $(".forecast");
-                var forecastTemp = $("#forecastTemp");
+                // var forecastTemp = $("#forecastTemp");
                 
                 //ForLoop- Displays Forecast for each Day in 5Day Forecast
                 for (i = 0; i < forecastEl.length; i++) {
@@ -119,15 +119,15 @@ $(document).ready(function () {
                     var forecastImg = "https://openweathermap.org/img/wn/" + response.list[forecastIndex].weather[0].icon + "@2x.png"
                     $("#forecastWeatherImg").attr("src", forecastImg);
                     $("#forecastWeatherImg").attr("alt", response.list[forecastIndex].weather[0].description);
+                    forecastEl[i].append(forecastWeatherImg);
 
                     //Displays Temperature under Weather Icon (on each forecast)
                     var forecastTempEl = "Temp: " + k2f(response.list[forecastIndex].main.temp) + " F"
                     console.log(forecastTempEl);
-                    forecastTemp.append(forecastTempEl);
+                    forecastEl[i].append(forecastTempEl);
 
                     //Displays Humidity under Temperature (on each forecast)
-                    var forecastHumdityEl = document.createElement("p");
-                    forecastHumdityEl.html("Humidity: " + response.list[forecastIndex].main.humidity + "%");
+                    var forecastHumdityEl = "Humidity: " + response.list[forecastIndex].main.humidity + "%"
                     forecastEl[i].append(forecastHumdityEl);
                 }
 
