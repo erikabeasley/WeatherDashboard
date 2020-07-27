@@ -95,11 +95,12 @@ $(document).ready(function () {
         })
             .then(function (response) {
 
-                var forecastEls = $(".forecast");
+                var forecastEl = $(".forecast");
+                var forecastTemp = $("#forecastTemp");
                 
                 //ForLoop- Displays Forecast for each Day in 5Day Forecast
-                for (i = 0; i < forecastEls.length; i++) {
-                    forecastEls[i].innerHTML = "";
+                for (i = 0; i < forecastEl.length; i++) {
+                    forecastEl[i].innerHTML = "";
                     var forecastIndex = i * 8 + 4;
                     var forecastDate = new Date(response.list[forecastIndex].dt * 1000);
                     console.log(forecastDate);
@@ -110,30 +111,24 @@ $(document).ready(function () {
                     var forecastYear = forecastDate.getFullYear();
 
                     //Displays (Month/Day/Year) on each forecast
-                    // var forecastDateEl = document.createElement("p");
                     var forecastDateY = forecastMonth + "/" + forecastDay + "/" + forecastYear;
-                    // forecastDateEl.setAttribute("class", "mt-3 mb-0 forecast-date");
-                    $("forecastDateEl").attr("class", "mt-3 mb-0 forecast-date");             
-                    forecastDateEl.html(forecastDateY);
-                    console.log(forecastDateY); 
-                    console.log(forecastDateEl); 
-                    forecastEls[i].append(forecastDateEl);
+                    $("forecastDateY").attr("class", "mt-3 mb-0 forecast-date");                             
+                    forecastEl[i].append(forecastDateY);
 
                     //Displays Weather Icon under Date (on each forecast)
-                    var forecastWeatherEl = document.createElement("img");
-                    $("forecastWeatherEl").attr("src", "https://openweathermap.org/img/wn/" + response.list[forecastIndex].weather[0].icon + "@2x.png");
-                    forecastWeatherEl.setAttribute("alt", response.list[forecastIndex].weather[0].description);
-                    forecastEls[i].append(forecastWeatherEl);
+                    var forecastImg = "https://openweathermap.org/img/wn/" + response.list[forecastIndex].weather[0].icon + "@2x.png"
+                    $("#forecastWeatherImg").attr("src", forecastImg);
+                    $("#forecastWeatherImg").attr("alt", response.list[forecastIndex].weather[0].description);
 
                     //Displays Temperature under Weather Icon (on each forecast)
-                    var forecastTempEl = document.createElement("p");
-                    forecastTempEl.html("Temp: " + k2f(response.list[forecastIndex].main.temp) + " &#176F");
-                    forecastEls[i].append(forecastTempEl);
+                    var forecastTempEl = "Temp: " + k2f(response.list[forecastIndex].main.temp) + " F"
+                    console.log(forecastTempEl);
+                    forecastTemp.append(forecastTempEl);
 
                     //Displays Humidity under Temperature (on each forecast)
                     var forecastHumdityEl = document.createElement("p");
                     forecastHumdityEl.html("Humidity: " + response.list[forecastIndex].main.humidity + "%");
-                    forecastEls[i].append(forecastHumdityEl);
+                    forecastEl[i].append(forecastHumdityEl);
                 }
 
             })

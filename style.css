@@ -28,6 +28,15 @@ input {
     text-align: center;
     display: block;
 }
+.container {
+    background-color: #0077ff;
+    width: 130px;
+    border-radius: 0px;
+}
+.forecast {
+    text-align: center;
+    display: block;
+}
 
 
 /* If I want to hide before searched */
