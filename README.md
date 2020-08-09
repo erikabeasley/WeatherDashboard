@@ -9,4 +9,4 @@ Local storage is utilized to save past cities searched by the user. When the use
 ## Deployed Application
 https://erikabeasley.github.io/WeatherDashboard/
 
-![Weather Dashboard](weatherdashboard.PNG)
+![Weather Dashboard](assets/capture.PNG)
